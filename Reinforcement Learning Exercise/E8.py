@@ -1,35 +1,16 @@
 import random
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-random.seed(100)
-
+import E6
 
 '''
 [LEFT,RIGHT,UP,DOWN]
 '''
 
-
-def reward(state):
-    if state == 100:
-        return 100
-    else:
-        return 0
-
-
-def generate_heatmap(matrix):
-    matrix2arr = []
-    for j in range(len(matrix)):
-        matrix2arr.append(max(matrix[j]))
-    arr = np.asmatrix(np.split(np.array(matrix2arr), 10))
-    sns.heatmap(arr)
-    plt.show()
-    return arr
-
-
-def choose_state(state, matrix, greed):
+def get_possible_states(state, matrix, maze):
     possible_states = []
+    if state % 10 == 2 or state % 10 == 6:
+        possible_states.append(0)
+    if state % 10 == 4 or state % 10 == 8:
+        possible_states.append(1)
     if state % 10 == 1:
         possible_states.append(1)
     elif state % 10 == 0:
@@ -39,7 +20,13 @@ def choose_state(state, matrix, greed):
         possible_states.append(1)
     if state - 10 > 0: possible_states.append(2)
     if state + 10 <= 100: possible_states.append(3)
+    return possible_states
+
+
+def choose_state(state, matrix, greed):
+    possible_states = get_possible_states(state, matrix)
     possible_states_utility = []
+
     for i in possible_states:
         possible_states_utility.append(matrix[state - 1][i])
     is_greedy = random.random()
@@ -63,7 +50,7 @@ def state_transition(iterations, env, greed):
     for i in range(iterations):
 
         if i > iterations * .3 and increase_greed and greed < 1:
-            greed = greed + 1/(20000*.7)
+            greed = greed + 1 / (20000 * .7)
             print(greed)
 
         if state == 100:
@@ -88,23 +75,13 @@ def state_transition(iterations, env, greed):
             state = next_state
 
 
-
-for t in range(30):
-    greed = .9
-    util_matrix = [[round(random.uniform(-.1, .1), 2) for h in range(4)] for k in range(100)]
-    state_transition(20000, util_matrix, greed)
-    generate_heatmap(util_matrix)
-
-
-'''for t in range(30):
-    greed = .2
-    util_matrix = [[round(random.uniform(-.1, .1), 2) for h in range(4)] for k in range(100)]
-    state_transition(20000, util_matrix, greed)
-    #generate_heatmap(util_matrix)
 '''
+[LEFT,RIGHT,UP,DOWN]
+'''
+# Fig 1
+util_matrix = [[round(random.uniform(-.1, .1), 2) for h in range(4)] for k in range(100)]
 
-'''for t in range(30):
-    greed = .3
-    util_matrix = [[round(random.uniform(-.1, .1), 2) for h in range(4)] for k in range(100)]
-    state_transition(20000, util_matrix, greed)
-    generate_heatmap(util_matrix)'''
+E6.state_transition(20000, util_matrix_1, .8)
+E6.generate_heatmap(util_matrix_1)
+'''for i in range(len(util_matrix_1)):
+    print(util_matrix_1[i],i)'''

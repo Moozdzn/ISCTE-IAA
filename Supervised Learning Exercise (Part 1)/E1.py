@@ -40,7 +40,6 @@ def epoch(t_inputs, t_outputs, w, d_w, a):
         outputs.append(output)
     for i in range(len(w)):
         w[i] = w[i] + d_w[i]
-    print(outputs)
 
     return not training_outputs == outputs
 
