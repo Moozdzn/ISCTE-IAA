@@ -60,7 +60,7 @@ def E6(pattern_size, guess, population_size):
     stagnate = 0
     iterations = 0
     while stagnate != 200000:
-        print(stagnate)
+        #print(stagnate)
         new_population = []
         while len(new_population) < 100:
             pattern_to_mutate_idx = random.randint(0, len(best_population_lst) - 1)
@@ -79,4 +79,4 @@ def E6(pattern_size, guess, population_size):
         iterations = iterations + 1
     print(best_population[2], guess, iterations)
 
-E6(32, bit_pattern(32), 100)
+#E6(32, bit_pattern(32), 100)
